@@ -1,5 +1,5 @@
 import React from "react";
-export const Product = ({ props }) => {
+export const Product = ({ props, children }) => {
   const {
     productName,
     productFlavor,
@@ -8,7 +8,6 @@ export const Product = ({ props }) => {
     additionalInfo,
     weight,
     description,
-    cta,
     ingredients
   } = props;
 
@@ -16,16 +15,28 @@ export const Product = ({ props }) => {
     <div className="product">
       <div className="product__border">
         <div className="product__block">
-          <span className="product__description">{description}</span>
-          <h2 className="product__name">{productName}</h2>
-          <h3 className="product__flavor">{productFlavor}</h3>
-          <p className="product__info">
-            {portions} {present} {additionalInfo}
-          </p>
-          <img className="product__img" src="" alt="Изображение кота" />
-          <span className="product__weight">{weight}</span>
+          <div className="product__description-wrap">
+            <span className="product__description">{description}</span>
+            <h2 className="product__name">{productName}</h2>
+            <h3 className="product__flavor">{productFlavor}</h3>
+            <div className="product__info">
+              {portions} {present}
+              {additionalInfo}
+            </div>
+          </div>
+          <img
+            className="product__img"
+            src="/img/cat.png"
+            alt="Изображение кота"
+            height="270px"
+            width="320px"
+          />
+          <div className="product__weight">
+            <span>{weight}</span>
+            <span>кг</span>
+          </div>
         </div>
-        <span className="product__cta">{cta}</span>
+        {children}
       </div>
     </div>
   );
