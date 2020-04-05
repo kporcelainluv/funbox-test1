@@ -1,16 +1,16 @@
 @font-face {
   font-family: "Exo-Thin";
   font-weight: normal;
-  src: url("./fonts/Exo-Thin.woff2") format("woff2"),
-    url("./fonts/Exo-Thin.woff") format("woff");
+  src: url("public/fonts/Exo-Thin.woff2") format("woff2"),
+    url("public/fonts/Exo-Thin.woff2") format("woff");
   font-display: swap;
 }
 
 @font-face {
   font-family: "Exo-SemiBold";
   font-weight: bold;
-  src: url("./fonts/Exo-SemiBold.woff2") format("woff2"),
-    url("./fonts/Exo-SemiBold.woff") format("woff");
+  src: url("public/fonts/Exo-SemiBold.woff2") format("woff2"),
+    url("public/fonts/Exo-SemiBold.woff") format("woff");
   font-display: swap;
 }
 
@@ -40,12 +40,23 @@ html {
   justify-content: center;
   align-items: center;
 }
-
+.container__heading {
+  color: #f2f2f2;
+  font-size: 42px;
+  font-weight: 200;
+}
+.container__wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 /*product */
 .product {
   display: flex;
   flex-direction: column;
 }
+
 .product__block {
   width: 320px;
   height: 480px;
@@ -56,6 +67,29 @@ html {
   position: relative;
   border: 4px solid #1698d9;
   border-radius: 5%;
+}
+.product__block--disabled {
+  border: 4px solid #f2f2f2;
+}
+
+.product__block--disabled:before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 320px;
+  height: 480px;
+  background-color: #f2f2f2;
+  opacity: 0.5;
+  z-index: 2;
+  border-radius: 5%;
+}
+
+.product__block--checked {
+  border: 4px solid #d91667;
+}
+.product__input {
+  opacity: 0;
 }
 .product__description-wrap {
   padding: 20px 40px;
@@ -114,6 +148,12 @@ html {
 .product__weight span:last-child {
   font-size: 22px;
 }
+.product__weight--checked {
+  background-color: #d91667;
+}
+.product__weight--disabled {
+  background-color: #b3b3b3;
+}
 
 .product__cta {
   display: block;
@@ -131,11 +171,17 @@ html {
   background-color: transparent;
   border-bottom: 1px solid #1698d9;
 }
+.product__cta--disabled {
+  color: #ffff66;
+}
 
 @media (min-width: 768px) {
   .container {
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+  }
+  .container__wrap {
+    flex-direction: row;
     max-width: 800px;
     margin: 0 auto;
     flex-wrap: wrap;
@@ -143,11 +189,16 @@ html {
   .product {
     margin: 0 20px;
   }
+  .product__block {
+    margin-top: 0;
+  }
 }
 @media (min-width: 1120px) {
   .container {
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+  }
+  .container__wrap {
     max-width: none;
     margin: 0;
     flex-wrap: wrap;

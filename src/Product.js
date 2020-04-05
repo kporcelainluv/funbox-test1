@@ -1,7 +1,36 @@
 import React from "react";
 
-export const Product = ({ props, children }) => {
+const getClassName = (name, checked, disabled) => {
+  if (checked) {
+    return `${name} ${name}--checked`;
+  } else if (disabled) {
+    return `${name} ${name}--disabled`;
+  }
+  return name;
+};
+
+const getCTAText = (
+  defaultText,
+  checked,
+  disabled,
+  productFlavor,
+  ingredients
+) => {
+  if (checked) {
+    return <span className="product__cta">{ingredients}</span>;
+  } else if (disabled) {
+    return (
+      <span className="product__cta product__cta--disabled">
+        Печалька, {productFlavor} закончился.
+      </span>
+    );
+  }
+  return defaultText;
+};
+
+export const Product = ({ props, products, updateProduct, children }) => {
   const {
+    id,
     productName,
     productFlavor,
     portions,
@@ -12,12 +41,23 @@ export const Product = ({ props, children }) => {
     ingredients
   } = props;
 
+  const checked = products.filter(elm => elm.name === id)[0].checked;
+  const disabled = products.filter(elm => elm.name === id)[0].disabled;
+
   return (
     <div className="product">
       <div className="product__border">
-        <form className="product__block">
-          <label>
-            <input type="checkbox" />
+        <form className={getClassName("product__block", checked, disabled)}>
+          <label className="product__label">
+            <input
+              type="checkbox"
+              className="product__input"
+              checked={checked}
+              onChange={e => {
+                e.preventDefault();
+                updateProduct(products, id);
+              }}
+            />
             <div className="product__description-wrap">
               <span className="product__description">{description}</span>
               <h2 className="product__name">{productName}</h2>
@@ -34,13 +74,13 @@ export const Product = ({ props, children }) => {
               height="270px"
               width="320px"
             />
-            <div className="product__weight">
+            <div className={getClassName("product__weight", checked, disabled)}>
               <span>{weight}</span>
               <span>кг</span>
             </div>
           </label>
         </form>
-        {children}
+        {getCTAText(children, checked, disabled, productFlavor, ingredients)}
       </div>
     </div>
   );
