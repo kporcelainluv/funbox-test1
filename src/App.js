@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Product } from "./Product";
 
-const products = [
+const productsList = [
   {
     productName: "Нямушка",
     productFlavor: "с фуа-гра",
@@ -38,17 +38,37 @@ const products = [
   }
 ];
 
+const markProduct = (state, index) => {
+  return state.map((elm, i) => {
+    if (index === i) {
+      elm.checked = !elm.checked;
+    }
+    return elm;
+  });
+};
+
 export const App = () => {
+  const [products, updateProducts] = useState([
+    { name: "fuaGra", checked: false },
+    { name: "fish", checked: false },
+    { name: "chicken", checked: false }
+  ]);
   return (
     <section className="container">
-      {products.map((product, index) => {
+      {productsList.map((product, index) => {
         return (
           <Product key={product.productName + index} props={product}>
             <span className="product__cta">
-              Чего сидишь? Порадуй котэ,{" "}
-              <a href="" className="product__link">
+              Чего сидишь? Порадуй котэ,
+              <button
+                className="product__button"
+                onClick={e => {
+                  e.preventDefault();
+                  updateProducts(markProduct(products, index));
+                }}
+              >
                 купи
-              </a>
+              </button>
               .
             </span>
           </Product>
