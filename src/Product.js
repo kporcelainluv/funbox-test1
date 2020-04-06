@@ -74,13 +74,16 @@ export const Product = ({ props, products, updateProduct, children }) => {
                 {additionalInfo}
               </div>
             </div>
-            <img
-              className="product__img"
-              src="/img/cat.png"
-              alt="Изображение кота"
-              height="270px"
-              width="320px"
-            />
+
+            <picture>
+              <source srcSet="./img/cat.webp" />
+              <img
+                className="product__img"
+                src="/img/cat.png"
+                alt="Изображение кота"
+              />
+            </picture>
+
             <div className={getClassName("product__weight", checked, disabled)}>
               <span>{weight}</span>
               <span>кг</span>
