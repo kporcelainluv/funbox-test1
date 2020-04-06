@@ -40,6 +40,9 @@ html {
   align-items: center;
   background-image: url("../img/Pattern.png");
   position: relative;
+  /*width: 100%;*/
+  max-width: 100%;
+  min-height: 100vh;
 }
 .container:before {
   position: absolute;
@@ -63,7 +66,7 @@ html {
 }
 .container__heading {
   color: #f2f2f2;
-  font-size: 42px;
+  font-size: 22px;
   font-weight: 200;
 }
 .container__wrap {
@@ -77,10 +80,7 @@ html {
   display: flex;
   flex-direction: column;
 }
-svg {
-  position: absolute;
-  /*top: 0;*/
-}
+
 .product__border {
   clip-path: polygon(15% 0, 100% 0, 100% 100%, 1% 100%, 0 10%);
   background-color: #1698d9;
@@ -97,7 +97,7 @@ svg {
   position: absolute;
   top: 0;
   left: 0;
-  width: 320px;
+  width: 300px;
   height: 480px;
   background-color: #f2f2f2;
   opacity: 0.5;
@@ -109,7 +109,7 @@ svg {
 }
 
 .product__block {
-  width: 320px;
+  width: 300px;
   height: 480px;
   display: flex;
   flex-direction: column;
@@ -127,8 +127,13 @@ svg {
 }
 .product__description {
   font-size: 16px;
-  line-height: 19px;
+  line-height: 25px;
   color: #666666;
+}
+.product__description--hover {
+  color: #e62e7a;
+  font-size: 16px;
+  line-height: 25px;
 }
 
 .product__name {
@@ -190,10 +195,10 @@ svg {
 .product__cta {
   display: block;
   font-size: 13px;
-  line-height: 15px;
+  line-height: 25px;
   color: #ffffff;
   text-align: center;
-  margin-top: 10px;
+  margin: 10px 0;
   z-index: 2;
 }
 .product__button {
@@ -224,6 +229,13 @@ svg {
   }
   .product__block {
     margin-top: 0;
+    width: 320px;
+  }
+  .container__heading {
+    font-size: 42px;
+  }
+  .product__border--disabled:before {
+    width: 320px;
   }
 }
 @media (min-width: 1120px) {

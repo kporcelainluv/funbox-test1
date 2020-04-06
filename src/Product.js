@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const getClassName = (name, checked, disabled) => {
   if (checked) {
@@ -29,6 +29,7 @@ const handleCTAText = (
 };
 
 export const Product = ({ props, products, updateProduct, children }) => {
+  const [flag, updateFlag] = useState(false);
   const {
     id,
     productName,
@@ -38,11 +39,14 @@ export const Product = ({ props, products, updateProduct, children }) => {
     additionalInfo,
     weight,
     description,
-    ingredients
+    ingredients,
+    hover
   } = props;
 
   const checked = products.filter(elm => elm.name === id)[0].checked;
   const disabled = products.filter(elm => elm.name === id)[0].disabled;
+
+  console.log({ flag });
   return (
     <div className="product">
       {/*<svg width="40" height="40">*/}
@@ -53,20 +57,37 @@ export const Product = ({ props, products, updateProduct, children }) => {
       {/*    strokeWidth="6"*/}
       {/*  />*/}
       {/*</svg>*/}
-      <div className={getClassName("product__border", checked, disabled)}>
+      <div
+        className={getClassName("product__border", checked, disabled)}
+        onMouseLeave={e => {
+          if (checked) {
+            updateFlag(true);
+          }
+        }}
+        onMouseEnter={() => {
+          updateFlag(false);
+        }}
+      >
         <form className="product__block">
           <label className="product__label">
             <input
               type="checkbox"
               className="product__input"
               checked={checked}
+              disabled={disabled}
               onChange={() => {
                 updateProduct(products, id);
               }}
             />
 
             <div className="product__description-wrap">
-              <span className="product__description">{description}</span>
+              <span
+                className={
+                  flag ? "product__description--hover" : "product__description"
+                }
+              >
+                {flag ? hover : description}
+              </span>
               <h2 className="product__name">{productName}</h2>
               <h3 className="product__flavor">{productFlavor}</h3>
               <div className="product__info">
