@@ -9,7 +9,7 @@ const getClassName = (name, checked, disabled) => {
   return name;
 };
 
-const getCTAText = (
+const handleCTAText = (
   defaultText,
   checked,
   disabled,
@@ -43,7 +43,6 @@ export const Product = ({ props, products, updateProduct, children }) => {
 
   const checked = products.filter(elm => elm.name === id)[0].checked;
   const disabled = products.filter(elm => elm.name === id)[0].disabled;
-
   return (
     <div className="product">
       <div className="product__border">
@@ -53,8 +52,7 @@ export const Product = ({ props, products, updateProduct, children }) => {
               type="checkbox"
               className="product__input"
               checked={checked}
-              onChange={e => {
-                e.preventDefault();
+              onChange={() => {
                 updateProduct(products, id);
               }}
             />
@@ -80,7 +78,7 @@ export const Product = ({ props, products, updateProduct, children }) => {
             </div>
           </label>
         </form>
-        {getCTAText(children, checked, disabled, productFlavor, ingredients)}
+        {handleCTAText(children, checked, disabled, productFlavor, ingredients)}
       </div>
     </div>
   );

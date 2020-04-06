@@ -72,7 +72,7 @@ export const App = () => {
   const [products, updateProducts] = useState([
     { name: "fuaGra", checked: false, disabled: false },
     { name: "fish", checked: true, disabled: false },
-    { name: "chicken", checked: false, disabled: true }
+    { name: "chicken", checked: false, disabled: false }
   ]);
   const updateProduct = (products, id) => {
     return updateProducts(markProduct(products, id));
