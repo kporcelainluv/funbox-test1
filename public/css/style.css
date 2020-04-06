@@ -32,13 +32,34 @@ html {
   font-family: Exo-Thin, Arial, sans-serif;
   background-color: dimgrey;
   color: #000000;
-  padding: 50px 0;
 }
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-image: url("../img/Pattern.png");
+  position: relative;
+}
+.container:before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5) 50%,
+    rgba(0, 0, 0, 0.5)
+  );
+}
+@media (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
+  .container {
+    background-image: url("../img/Pattern@2x.png");
+    background-size: cover;
+  }
 }
 .container__heading {
   color: #f2f2f2;
@@ -56,27 +77,26 @@ html {
   display: flex;
   flex-direction: column;
 }
-
-.product__block {
-  width: 320px;
-  height: 480px;
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-  background-color: #f2f2f2;
-  position: relative;
-  border: 4px solid #1698d9;
+svg {
+  position: absolute;
+  /*top: 0;*/
+}
+.product__border {
+  clip-path: polygon(15% 0, 100% 0, 100% 100%, 1% 100%, 0 10%);
+  background-color: #1698d9;
+  border: 4px solid transparent;
   border-radius: 5%;
-}
-.product__block--disabled {
-  border: 4px solid #f2f2f2;
+  position: relative;
 }
 
-.product__block--disabled:before {
+.product__border--disabled {
+  background-color: #b3b3b3;
+}
+.product__border--disabled:before {
   content: "";
   position: absolute;
-  top: -4px;
-  left: -4px;
+  top: 0;
+  left: 0;
   width: 320px;
   height: 480px;
   background-color: #f2f2f2;
@@ -84,10 +104,21 @@ html {
   z-index: 2;
   border-radius: 5%;
 }
-
-.product__block--checked {
-  border: 4px solid #d91667;
+.product__border--checked {
+  background-color: #d91667;
 }
+
+.product__block {
+  width: 320px;
+  height: 480px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #f2f2f2;
+  border-radius: 5%;
+  clip-path: polygon(15% 0, 100% 0, 100% 100%, 1% 100%, 0 10%);
+}
+
 .product__input {
   opacity: 0;
 }
@@ -99,6 +130,7 @@ html {
   line-height: 19px;
   color: #666666;
 }
+
 .product__name {
   font-size: 48px;
   line-height: 56px;
@@ -162,6 +194,7 @@ html {
   color: #ffffff;
   text-align: center;
   margin-top: 10px;
+  z-index: 2;
 }
 .product__button {
   color: #1698d9;
@@ -187,7 +220,7 @@ html {
     flex-wrap: wrap;
   }
   .product {
-    margin: 0 20px;
+    margin: 50px 20px 0;
   }
   .product__block {
     margin-top: 0;

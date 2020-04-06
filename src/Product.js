@@ -45,8 +45,16 @@ export const Product = ({ props, products, updateProduct, children }) => {
   const disabled = products.filter(elm => elm.name === id)[0].disabled;
   return (
     <div className="product">
-      <div className="product__border">
-        <form className={getClassName("product__block", checked, disabled)}>
+      {/*<svg width="40" height="40">*/}
+      {/*  <path*/}
+      {/*    d="M23,3.5 h200 a20,20 0 0 1 20,20 v200 a20,20 0 0 1 -20,20 h-200 a20,20 0 0 1 -20,-20 v-200 a20,20 0 0 1 20,-20 z"*/}
+      {/*    fill="none"*/}
+      {/*    stroke="black"*/}
+      {/*    strokeWidth="6"*/}
+      {/*  />*/}
+      {/*</svg>*/}
+      <div className={getClassName("product__border", checked, disabled)}>
+        <form className="product__block">
           <label className="product__label">
             <input
               type="checkbox"
@@ -56,6 +64,7 @@ export const Product = ({ props, products, updateProduct, children }) => {
                 updateProduct(products, id);
               }}
             />
+
             <div className="product__description-wrap">
               <span className="product__description">{description}</span>
               <h2 className="product__name">{productName}</h2>
@@ -78,8 +87,8 @@ export const Product = ({ props, products, updateProduct, children }) => {
             </div>
           </label>
         </form>
-        {handleCTAText(children, checked, disabled, productFlavor, ingredients)}
       </div>
+      {handleCTAText(children, checked, disabled, productFlavor, ingredients)}
     </div>
   );
 };
