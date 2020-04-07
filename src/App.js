@@ -15,7 +15,7 @@ const productsList = [
     ingredients: "Печень утки разварная с артишоками.",
     question: "Котэ не одобряет?",
     amount: 10,
-    checked: true
+    checked: false
   },
   {
     id: "fish",
