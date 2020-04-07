@@ -102,7 +102,7 @@ export const Product = ({ product, handleCheck }) => {
             </div>
 
             <picture>
-              <source srcSet={"img/cat.webp"} />
+              <source srcSet={"img/cat.webp"} type="image/webp" />
               <img
                 className="product__img"
                 src={"img/cat.png"}

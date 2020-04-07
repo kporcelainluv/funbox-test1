@@ -182,7 +182,8 @@ html {
   bottom: 0;
   left: 0;
   border-radius: 5%;
-  object-fit: cover;
+  /*object-fit: cover;*/
+  width: 290px;
 }
 .product__weight {
   background-color: #1698d9;
@@ -222,6 +223,7 @@ html {
   text-align: center;
   margin: 10px 0;
   z-index: 2;
+  max-width: 300px;
 }
 .product__button {
   color: #1698d9;
@@ -263,6 +265,9 @@ html {
   }
   .product__border--disabled:before {
     width: 320px;
+  }
+  .product__cta {
+    max-width: 320px;
   }
 }
 @media (min-width: 1120px) {
