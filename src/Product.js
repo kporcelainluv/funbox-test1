@@ -43,8 +43,9 @@ const CTA = ({
   );
 };
 
-export const Product = ({ product, handleCheck, checked, disabled }) => {
+export const Product = ({ product, handleCheck }) => {
   const [mouseLeft, handleMouseLeft] = useState(false);
+
   const {
     id,
     productFlavor,
@@ -55,8 +56,12 @@ export const Product = ({ product, handleCheck, checked, disabled }) => {
     portions,
     present,
     additionalInfo,
-    weight
+    weight,
+    checked,
+    amount
   } = product;
+
+  const disabled = !amount > 0;
 
   const handleOnMouseLeave = checked => {
     if (checked) {

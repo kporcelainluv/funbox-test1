@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Product } from "./Product";
 
@@ -13,7 +13,9 @@ const productsList = [
     description: "Сказочное заморское явство",
     cta: "Чего сидишь? Порадуй котэ, купи.",
     ingredients: "Печень утки разварная с артишоками.",
-    question: "Котэ не одобряет?"
+    question: "Котэ не одобряет?",
+    amount: 10,
+    checked: true
   },
   {
     id: "fish",
@@ -25,7 +27,9 @@ const productsList = [
     description: "Сказочное заморское явство",
     cta: "Чего сидишь? Порадуй котэ, купи.",
     ingredients: "Головы щучьи с чесноком да свежайшая семгушка.",
-    question: "Котэ не одобряет?"
+    question: "Котэ не одобряет?",
+    amount: 10,
+    checked: true
   },
   {
     id: "chicken",
@@ -38,7 +42,9 @@ const productsList = [
     description: "Сказочное заморское явство",
     cta: "Чего сидишь? Порадуй котэ, купи.",
     ingredients: "Филе из цыплят с трюфелями в бульоне.",
-    question: "Котэ не одобряет?"
+    question: "Котэ не одобряет?",
+    amount: 0,
+    checked: false
   }
 ];
 
@@ -57,9 +63,13 @@ const handleText = list => {
 const handleOutput = products => {
   let chosen = [];
   let outOfStock = [];
-  products.map((product, index) => {
-    const name = `${productsList[index].productName} ${productsList[index].productFlavor}`;
-    if (product.disabled) {
+  let left = [];
+
+  products.map(product => {
+    const name = `${product.productName} ${product.productFlavor}`;
+    left = [...left, `${name}: ${product.amount}`];
+
+    if (product.amount < 1) {
       outOfStock = [...outOfStock, name];
       return outOfStock;
     } else if (product.checked) {
@@ -68,44 +78,53 @@ const handleOutput = products => {
     }
   });
 
-  return `Пользователь выбрал: ${handleText(chosen)}\nЗакончились: ${handleText(
-    outOfStock
-  )}`;
+  return `Пользователь выбрал: ${handleText(chosen)}
+  \nОстаток: ${handleText(left)}
+  \nНет в наличие: ${handleText(outOfStock)}`;
 };
 
 export const App = () => {
-  const [products, updateProducts] = useState([
-    { name: "fuaGra", checked: false, disabled: false },
-    { name: "fish", checked: true, disabled: false },
-    { name: "chicken", checked: false, disabled: true }
-  ]);
+  const [products, updateProducts] = useState(productsList);
+
+  useEffect(() => {
+    const updatedProducts = products.map(product => {
+      if (product.checked) {
+        return { ...product, amount: product.amount - 1 };
+      }
+      return product;
+    });
+    updateProducts(updatedProducts);
+  }, []);
 
   const handleCheck = id => {
     updateProducts(products =>
       products.map(product => {
-        if (product.name === id) {
+        const amount = product.checked
+          ? product.amount + 1
+          : product.amount - 1;
+        if (product.id === id) {
           return {
             ...product,
-            checked: !product.checked
+            checked: !product.checked,
+            amount: amount
           };
         }
         return product;
       })
     );
   };
+
   return (
     <section className="container">
       <h1 className="visually-hidden">Страница продажи корма для котов</h1>
       <h2 className="container__heading">Ты сегодня покормил кота?</h2>
       <div className="container__wrap">
-        {productsList.map((product, index) => {
+        {products.map((product, index) => {
           return (
             <Product
               key={product.productName + index}
               product={product}
               handleCheck={handleCheck}
-              checked={products[index].checked}
-              disabled={products[index].disabled}
             />
           );
         })}
@@ -113,7 +132,9 @@ export const App = () => {
 
       <button
         className="container__button"
-        onClick={() => alert(handleOutput(products))}
+        onClick={() => {
+          alert(handleOutput(products));
+        }}
       >
         click me!
       </button>
