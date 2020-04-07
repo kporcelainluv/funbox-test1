@@ -41,20 +41,26 @@ html {
   justify-content: center;
   align-items: center;
   position: relative;
-  background: url("../img/Pattern.png"),
-    linear-gradient(
+  background: linear-gradient(
       180deg,
       rgba(0, 0, 0, 0.5),
       rgba(0, 0, 0, 0.5) 50%,
       rgba(0, 0, 0, 0.5)
-    );
+    ),
+    url("../img/Pattern.png");
   max-width: 100%;
   min-height: 100vh;
 }
 
 @media (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
   .container {
-    background-image: url("../img/Pattern@2x.png");
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0.5) 50%,
+        rgba(0, 0, 0, 0.5)
+      ),
+      url("../img/Pattern@2x.png");
     background-size: cover;
   }
 }
@@ -139,7 +145,7 @@ html {
   background-color: #39ff14;
 }
 .product__description-wrap {
-  padding: 20px 40px;
+  padding: 0 40px 20px;
 }
 .product__description {
   font-size: 16px;

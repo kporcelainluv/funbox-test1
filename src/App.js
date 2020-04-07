@@ -76,6 +76,7 @@ const handleOutput = products => {
       chosen = [...chosen, name];
       return chosen;
     }
+    return product;
   });
 
   return `Пользователь выбрал: ${handleText(chosen)}
