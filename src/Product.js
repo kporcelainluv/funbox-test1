@@ -90,7 +90,7 @@ export const Product = ({ product, handleCheck }) => {
               <span
                 className={
                   mouseLeft
-                    ? "product__description--question"
+                    ? "product__question"
                     : "product__description"
                 }
               >
