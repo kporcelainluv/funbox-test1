@@ -89,15 +89,13 @@ export const Product = ({ product, handleCheck }) => {
             <div className="product__description-wrap">
               <span
                 className={
-                  mouseLeft
-                    ? "product__question"
-                    : "product__description"
+                  mouseLeft ? "product__question" : "product__description"
                 }
               >
                 {mouseLeft ? question : description}
               </span>
-              <h2 className="product__name">{productName}</h2>
-              <h3 className="product__flavor">{productFlavor}</h3>
+              <h3 className="product__name">{productName}</h3>
+              <h4 className="product__flavor">{productFlavor}</h4>
               <div className="product__info">
                 {portions} {present} {additionalInfo}
               </div>
