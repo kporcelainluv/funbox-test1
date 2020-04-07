@@ -9,13 +9,14 @@ const getClassName = (name, checked, disabled) => {
   return name;
 };
 
-const handleCTAText = (
-  defaultText,
+const CTA = ({
   checked,
   disabled,
   productFlavor,
-  ingredients
-) => {
+  ingredients,
+  handleCheck,
+  id
+}) => {
   if (checked) {
     return <span className="product__cta">{ingredients}</span>;
   } else if (disabled) {
@@ -25,48 +26,50 @@ const handleCTAText = (
       </span>
     );
   }
-  return defaultText;
+  return (
+    <span className="product__cta">
+      Чего сидишь? Порадуй котэ,
+      <button
+        className="product__button"
+        onClick={e => {
+          e.preventDefault();
+          handleCheck(id);
+        }}
+      >
+        купи
+      </button>
+      .
+    </span>
+  );
 };
 
-export const Product = ({ props, products, updateProduct, children }) => {
-  const [flag, updateFlag] = useState(false);
+export const Product = ({ product, handleCheck, checked, disabled }) => {
+  const [mouseLeft, handleMouseLeft] = useState(false);
   const {
     id,
-    productName,
     productFlavor,
+    ingredients,
+    question,
+    productName,
+    description,
     portions,
     present,
     additionalInfo,
-    weight,
-    description,
-    ingredients,
-    hover
-  } = props;
+    weight
+  } = product;
 
-  const checked = products.filter(elm => elm.name === id)[0].checked;
-  const disabled = products.filter(elm => elm.name === id)[0].disabled;
+  const handleOnMouseLeave = checked => {
+    if (checked) {
+      handleMouseLeft(true);
+    }
+  };
 
-  console.log({ flag });
   return (
     <div className="product">
-      {/*<svg width="40" height="40">*/}
-      {/*  <path*/}
-      {/*    d="M23,3.5 h200 a20,20 0 0 1 20,20 v200 a20,20 0 0 1 -20,20 h-200 a20,20 0 0 1 -20,-20 v-200 a20,20 0 0 1 20,-20 z"*/}
-      {/*    fill="none"*/}
-      {/*    stroke="black"*/}
-      {/*    strokeWidth="6"*/}
-      {/*  />*/}
-      {/*</svg>*/}
       <div
         className={getClassName("product__border", checked, disabled)}
-        onMouseLeave={e => {
-          if (checked) {
-            updateFlag(true);
-          }
-        }}
-        onMouseEnter={() => {
-          updateFlag(false);
-        }}
+        onMouseLeave={() => handleOnMouseLeave(checked)}
+        onMouseEnter={() => handleMouseLeft(false)}
       >
         <form className="product__block">
           <label className="product__label">
@@ -75,32 +78,31 @@ export const Product = ({ props, products, updateProduct, children }) => {
               className="product__input"
               checked={checked}
               disabled={disabled}
-              onChange={() => {
-                updateProduct(products, id);
-              }}
+              onChange={() => handleCheck(id)}
             />
 
             <div className="product__description-wrap">
               <span
                 className={
-                  flag ? "product__description--hover" : "product__description"
+                  mouseLeft
+                    ? "product__description--question"
+                    : "product__description"
                 }
               >
-                {flag ? hover : description}
+                {mouseLeft ? question : description}
               </span>
               <h2 className="product__name">{productName}</h2>
               <h3 className="product__flavor">{productFlavor}</h3>
               <div className="product__info">
-                {portions} {present}
-                {additionalInfo}
+                {portions} {present} {additionalInfo}
               </div>
             </div>
 
             <picture>
-              <source srcSet="./img/cat.webp" />
+              <source srcSet={"img/cat.webp"} />
               <img
                 className="product__img"
-                src="/img/cat.png"
+                src={"img/cat.png"}
                 alt="Изображение кота"
               />
             </picture>
@@ -112,7 +114,14 @@ export const Product = ({ props, products, updateProduct, children }) => {
           </label>
         </form>
       </div>
-      {handleCTAText(children, checked, disabled, productFlavor, ingredients)}
+      <CTA
+        checked={checked}
+        disabled={disabled}
+        productFlavor={productFlavor}
+        ingredients={ingredients}
+        handleCheck={handleCheck}
+        id={id}
+      />
     </div>
   );
 };
