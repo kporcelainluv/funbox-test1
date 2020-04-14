@@ -69,23 +69,14 @@ export const Product = ({ product, handleCheck }) => {
     }
   };
 
-  // <div className="helloworld">
-  //   <div className={"border"} />
-  //
-  //   <h2 style={{ zIndex: "10", color: "blue", margin: "100px 0" }}>
-  //     Hello ks
-  //   </h2>
-  // </div>
-
   return (
     <div className="product">
       <div
-        // className={getClassName("product__border", checked, disabled)}
-        className={"border"}
+        className={getClassName("product__border", checked, disabled)}
         onMouseLeave={() => handleOnMouseLeave(checked)}
         onMouseEnter={() => handleMouseLeft(false)}
       >
-        <form className="helloworld">
+        <form className="product__block">
           <label className="product__label">
             <input
               type="checkbox"
