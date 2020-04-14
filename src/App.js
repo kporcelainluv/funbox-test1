@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import { Product } from "./Product";
-
 const productsList = [
   {
     id: "fuaGra",
@@ -130,7 +129,6 @@ export const App = () => {
           );
         })}
       </div>
-
       <button
         className="container__button"
         onClick={() => {
@@ -139,6 +137,26 @@ export const App = () => {
       >
         click me!
       </button>
+      {/*<svg*/}
+      {/*  xmlns="http://www.w3.org/2000/svg"*/}
+      {/*  width="320"*/}
+      {/*  height="480"*/}
+      {/*  viewBox="0 0 320 480"*/}
+      {/*  id={"svg"}*/}
+      {/*>*/}
+      {/*  <g>*/}
+      {/*    <g>*/}
+      {/*      <path*/}
+      {/*        fill="none"*/}
+      {/*        stroke="#1698d9"*/}
+      {/*        stroke-miterlimit="20"*/}
+      {/*        stroke-width="8"*/}
+      {/*        d="M308 0c6.627 0 12 5.372 12 12v456c0 6.627-5.373 12-12 12H12c-6.627 0-12-5.373-12-12V43L43 0z"*/}
+      {/*        clip-path='url("#94gxa")'*/}
+      {/*      />*/}
+      {/*    </g>*/}
+      {/*  </g>*/}
+      {/*</svg>*/}
     </section>
   );
 };
