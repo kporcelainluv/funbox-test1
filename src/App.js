@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { Product } from "./Product";
 
@@ -86,16 +86,6 @@ const handleOutput = products => {
 
 export const App = () => {
   const [products, updateProducts] = useState(productsList);
-
-  useEffect(() => {
-    const updatedProducts = products.map(product => {
-      if (product.checked) {
-        return { ...product, amount: product.amount - 1 };
-      }
-      return product;
-    });
-    updateProducts(updatedProducts);
-  }, []);
 
   const handleCheck = id => {
     updateProducts(products =>
