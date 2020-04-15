@@ -148,7 +148,7 @@ html {
   border: 4px solid transparent;
 }
 
-.product__wrap:focus-within .product__name {
+.product__border:focus-within .product__name {
   text-decoration: underline;
 }
 .product__wrap:active {

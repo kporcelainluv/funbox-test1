@@ -29,7 +29,7 @@ const productsList = [
     ingredients: "Головы щучьи с чесноком да свежайшая семгушка.",
     question: "Котэ не одобряет?",
     amount: 10,
-    checked: true
+    checked: false
   },
   {
     id: "chicken",
@@ -137,7 +137,7 @@ export const App = () => {
           alert(handleOutput(products));
         }}
       >
-        click me!
+        get balance
       </button>
     </section>
   );
