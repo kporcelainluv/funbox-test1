@@ -9,31 +9,33 @@ const getClassName = (name, checked, disabled) => {
   return name;
 };
 
-const CTA = ({
-  checked,
-  disabled,
-  productFlavor,
-  ingredients,
-  handleCheck,
-  id
-}) => {
+const CTA = ({ product, checked, disabled, handleSelect, handleDeselect }) => {
+  const { id, productFlavor, ingredients } = product;
+
   if (checked) {
     return <span className="product__cta">{ingredients}</span>;
-  } else if (disabled) {
+  }
+
+  if (disabled) {
     return (
       <span className="product__cta product__cta--disabled">
         Печалька, {productFlavor} закончился.
       </span>
     );
   }
+
   return (
     <span className="product__cta">
       Чего сидишь? Порадуй котэ,
       <button
         className="product__button"
-        onClick={e => {
-          e.preventDefault();
-          handleCheck(id);
+        type="button"
+        onClick={() => {
+          if (checked) {
+            handleDeselect(id);
+          } else {
+            handleSelect(id);
+          }
         }}
       >
         купи
@@ -43,31 +45,30 @@ const CTA = ({
   );
 };
 
-export const Product = ({ product, handleCheck }) => {
+const isDisabled = product => product.amount < 1;
+
+export const Product = ({ product, handleSelect, handleDeselect, checked }) => {
   const [mouseLeft, handleMouseLeft] = useState(false);
 
   const {
     id,
     productFlavor,
-    ingredients,
     question,
     productName,
     description,
     portions,
     present,
     additionalInfo,
-    weight,
-    checked,
-    amount
+    weight
   } = product;
-
-  const disabled = amount < 1;
 
   const handleOnMouseLeave = checked => {
     if (checked) {
       handleMouseLeft(true);
     }
   };
+
+  const disabled = isDisabled(product);
 
   return (
     <div className="product">
@@ -118,12 +119,11 @@ export const Product = ({ product, handleCheck }) => {
         </form>
       </div>
       <CTA
-        checked={checked}
+        product={product}
         disabled={disabled}
-        productFlavor={productFlavor}
-        ingredients={ingredients}
-        handleCheck={handleCheck}
-        id={id}
+        checked={checked}
+        handleCheck={handleSelect}
+        handleDeselect={handleDeselect}
       />
     </div>
   );

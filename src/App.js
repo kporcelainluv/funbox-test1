@@ -102,7 +102,7 @@ export const App = () => {
             <Product
               key={product.id}
               product={product}
-              handleCheck={handleSelect}
+              handleSelect={handleSelect}
               handleDeselect={handleDeselect}
               checked={isChecked(selectedProducts, product.id)}
             />
