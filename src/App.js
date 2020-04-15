@@ -97,10 +97,10 @@ export const App = () => {
       <h1 className="visually-hidden">Страница продажи корма для котов</h1>
       <h2 className="container__heading">Ты сегодня покормил кота?</h2>
       <div className="container__wrap">
-        {productsList.map((product, index) => {
+        {productsList.map(product => {
           return (
             <Product
-              key={product.productName + index}
+              key={product.id}
               product={product}
               handleCheck={handleSelect}
               handleDeselect={handleDeselect}
