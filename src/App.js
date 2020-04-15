@@ -98,13 +98,21 @@ export const App = () => {
       <h2 className="container__heading">Ты сегодня покормил кота?</h2>
       <div className="container__wrap">
         {productsList.map(product => {
+          const id = product.id;
+          const checked = isChecked(selectedProducts, id);
+
           return (
             <Product
-              key={product.id}
+              key={id}
               product={product}
-              handleSelect={handleSelect}
-              handleDeselect={handleDeselect}
-              checked={isChecked(selectedProducts, product.id)}
+              handleCheck={() => {
+                if (checked) {
+                  handleDeselect(id);
+                } else {
+                  handleSelect(id);
+                }
+              }}
+              checked={checked}
             />
           );
         })}

@@ -3,14 +3,15 @@ import React, { useState } from "react";
 const getClassName = (name, checked, disabled) => {
   if (checked) {
     return `${name} ${name}--checked`;
-  } else if (disabled) {
+  }
+  if (disabled) {
     return `${name} ${name}--disabled`;
   }
   return name;
 };
 
-const CTA = ({ product, checked, disabled, handleSelect, handleDeselect }) => {
-  const { id, productFlavor, ingredients } = product;
+const CTA = ({ product, checked, disabled, handleCheck }) => {
+  const { productFlavor, ingredients } = product;
 
   if (checked) {
     return <span className="product__cta">{ingredients}</span>;
@@ -27,17 +28,7 @@ const CTA = ({ product, checked, disabled, handleSelect, handleDeselect }) => {
   return (
     <span className="product__cta">
       Чего сидишь? Порадуй котэ,
-      <button
-        className="product__button"
-        type="button"
-        onClick={() => {
-          if (checked) {
-            handleDeselect(id);
-          } else {
-            handleSelect(id);
-          }
-        }}
-      >
+      <button className="product__button" type="button" onClick={handleCheck}>
         купи
       </button>
       .
@@ -47,11 +38,10 @@ const CTA = ({ product, checked, disabled, handleSelect, handleDeselect }) => {
 
 const isDisabled = product => product.amount < 1;
 
-export const Product = ({ product, handleSelect, handleDeselect, checked }) => {
-  const [mouseLeft, handleMouseLeft] = useState(false);
+export const Product = ({ product, handleCheck, checked }) => {
+  const [mouseLeft, setMouseLeft] = useState(false);
 
   const {
-    id,
     productFlavor,
     question,
     productName,
@@ -62,9 +52,9 @@ export const Product = ({ product, handleSelect, handleDeselect, checked }) => {
     weight
   } = product;
 
-  const handleOnMouseLeave = checked => {
+  const handleOnMouseLeave = () => {
     if (checked) {
-      handleMouseLeft(true);
+      setMouseLeft(true);
     }
   };
 
@@ -74,8 +64,8 @@ export const Product = ({ product, handleSelect, handleDeselect, checked }) => {
     <div className="product">
       <div
         className={getClassName("product__border", checked, disabled)}
-        onMouseLeave={() => handleOnMouseLeave(checked)}
-        onMouseEnter={() => handleMouseLeft(false)}
+        onMouseLeave={handleOnMouseLeave}
+        onMouseEnter={() => setMouseLeft(false)}
       >
         <form className="product__block">
           <label className="product__label">
@@ -84,9 +74,8 @@ export const Product = ({ product, handleSelect, handleDeselect, checked }) => {
               className="product__input"
               checked={checked}
               disabled={disabled}
-              onChange={() => handleCheck(id)}
+              onChange={handleCheck}
             />
-
             <div className="product__description-wrap">
               <span
                 className={
@@ -101,7 +90,6 @@ export const Product = ({ product, handleSelect, handleDeselect, checked }) => {
                 {portions} {present} {additionalInfo}
               </div>
             </div>
-
             <picture>
               <source srcSet={"img/cat.webp"} type="image/webp" />
               <img
@@ -110,7 +98,6 @@ export const Product = ({ product, handleSelect, handleDeselect, checked }) => {
                 alt="Изображение кота"
               />
             </picture>
-
             <div className={getClassName("product__weight", checked, disabled)}>
               <span>{weight}</span>
               <span>кг</span>
@@ -122,8 +109,7 @@ export const Product = ({ product, handleSelect, handleDeselect, checked }) => {
         product={product}
         disabled={disabled}
         checked={checked}
-        handleCheck={handleSelect}
-        handleDeselect={handleDeselect}
+        handleCheck={handleCheck}
       />
     </div>
   );
