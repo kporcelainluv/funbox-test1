@@ -61,7 +61,7 @@ export const Product = ({ product, handleCheck }) => {
     amount
   } = product;
 
-  const disabled = !amount > 0;
+  const disabled = amount < 1;
 
   const handleOnMouseLeave = checked => {
     if (checked) {

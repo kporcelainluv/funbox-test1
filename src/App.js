@@ -135,7 +135,7 @@ export const App = () => {
           alert(handleOutput(products));
         }}
       >
-        click me!
+        get balance
       </button>
     </section>
   );
