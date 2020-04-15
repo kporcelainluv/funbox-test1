@@ -14,8 +14,7 @@ const productsList = [
     cta: "Чего сидишь? Порадуй котэ, купи.",
     ingredients: "Печень утки разварная с артишоками.",
     question: "Котэ не одобряет?",
-    amount: 10,
-    checked: false
+    amount: 10
   },
   {
     id: "fish",
@@ -28,8 +27,7 @@ const productsList = [
     cta: "Чего сидишь? Порадуй котэ, купи.",
     ingredients: "Головы щучьи с чесноком да свежайшая семгушка.",
     question: "Котэ не одобряет?",
-    amount: 10,
-    checked: false
+    amount: 10
   },
   {
     id: "chicken",
@@ -43,8 +41,7 @@ const productsList = [
     cta: "Чего сидишь? Порадуй котэ, купи.",
     ingredients: "Филе из цыплят с трюфелями в бульоне.",
     question: "Котэ не одобряет?",
-    amount: 0,
-    checked: false
+    amount: 0
   }
 ];
 
@@ -59,6 +56,8 @@ const handleText = list => {
     }
   }, "");
 };
+
+const isChecked = (products, id) => products.some(p => p.id === id);
 
 const handleOutput = products => {
   let chosen = [];
@@ -85,37 +84,27 @@ const handleOutput = products => {
 };
 
 export const App = () => {
-  const [products, updateProducts] = useState(productsList);
+  const [selectedProducts, updateSelectedProducts] = useState([]);
 
-  const handleCheck = id => {
-    updateProducts(products =>
-      products.map(product => {
-        const amount = product.checked
-          ? product.amount + 1
-          : product.amount - 1;
-        if (product.id === id) {
-          return {
-            ...product,
-            checked: !product.checked,
-            amount: amount
-          };
-        }
-        return product;
-      })
-    );
-  };
+  const handleSelect = id =>
+    updateSelectedProducts(products => [...products, id]);
+
+  const handleDeselect = id =>
+    updateSelectedProducts(products => products.filter(p => p.id !== id));
 
   return (
     <section className="container">
       <h1 className="visually-hidden">Страница продажи корма для котов</h1>
       <h2 className="container__heading">Ты сегодня покормил кота?</h2>
       <div className="container__wrap">
-        {products.map((product, index) => {
+        {productsList.map((product, index) => {
           return (
             <Product
               key={product.productName + index}
               product={product}
-              handleCheck={handleCheck}
+              handleCheck={handleSelect}
+              handleDeselect={handleDeselect}
+              checked={isChecked(selectedProducts, product.id)}
             />
           );
         })}
