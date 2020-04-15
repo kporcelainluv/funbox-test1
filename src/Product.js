@@ -3,39 +3,32 @@ import React, { useState } from "react";
 const getClassName = (name, checked, disabled) => {
   if (checked) {
     return `${name} ${name}--checked`;
-  } else if (disabled) {
+  }
+  if (disabled) {
     return `${name} ${name}--disabled`;
   }
   return name;
 };
 
-const CTA = ({
-  checked,
-  disabled,
-  productFlavor,
-  ingredients,
-  handleCheck,
-  id
-}) => {
+const CTA = ({ product, checked, disabled, handleCheck }) => {
+  const { productFlavor, ingredients } = product;
+
   if (checked) {
     return <span className="product__cta">{ingredients}</span>;
-  } else if (disabled) {
+  }
+
+  if (disabled) {
     return (
       <span className="product__cta product__cta--disabled">
         Печалька, {productFlavor} закончился.
       </span>
     );
   }
+
   return (
     <span className="product__cta">
       Чего сидишь? Порадуй котэ,
-      <button
-        className="product__button"
-        onClick={e => {
-          e.preventDefault();
-          handleCheck(id);
-        }}
-      >
+      <button className="product__button" type="button" onClick={handleCheck}>
         купи
       </button>
       .
@@ -43,38 +36,36 @@ const CTA = ({
   );
 };
 
-export const Product = ({ product, handleCheck }) => {
-  const [mouseLeft, handleMouseLeft] = useState(false);
+const isDisabled = product => product.amount < 1;
+
+export const Product = ({ product, handleCheck, checked }) => {
+  const [mouseLeft, setMouseLeft] = useState(false);
 
   const {
-    id,
     productFlavor,
-    ingredients,
     question,
     productName,
     description,
     portions,
     present,
     additionalInfo,
-    weight,
-    checked,
-    amount
+    weight
   } = product;
 
-  const disabled = amount < 1;
-
-  const handleOnMouseLeave = checked => {
+  const handleOnMouseLeave = () => {
     if (checked) {
-      handleMouseLeft(true);
+      setMouseLeft(true);
     }
   };
+
+  const disabled = isDisabled(product);
 
   return (
     <div className="product">
       <div
         className={getClassName("product__border", checked, disabled)}
-        onMouseLeave={() => handleOnMouseLeave(checked)}
-        onMouseEnter={() => handleMouseLeft(false)}
+        onMouseLeave={handleOnMouseLeave}
+        onMouseEnter={() => setMouseLeft(false)}
       >
         <form className="product__block">
           <label className="product__label">
@@ -83,9 +74,8 @@ export const Product = ({ product, handleCheck }) => {
               className="product__input"
               checked={checked}
               disabled={disabled}
-              onChange={() => handleCheck(id)}
+              onChange={handleCheck}
             />
-
             <div className="product__description-wrap">
               <span
                 className={
@@ -100,7 +90,6 @@ export const Product = ({ product, handleCheck }) => {
                 {portions} {present} {additionalInfo}
               </div>
             </div>
-
             <picture>
               <source srcSet={"img/cat.webp"} type="image/webp" />
               <img
@@ -109,7 +98,6 @@ export const Product = ({ product, handleCheck }) => {
                 alt="Изображение кота"
               />
             </picture>
-
             <div className={getClassName("product__weight", checked, disabled)}>
               <span>{weight}</span>
               <span>кг</span>
@@ -118,12 +106,10 @@ export const Product = ({ product, handleCheck }) => {
         </form>
       </div>
       <CTA
-        checked={checked}
+        product={product}
         disabled={disabled}
-        productFlavor={productFlavor}
-        ingredients={ingredients}
+        checked={checked}
         handleCheck={handleCheck}
-        id={id}
       />
     </div>
   );

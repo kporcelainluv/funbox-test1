@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { Product } from "./Product";
 const productsList = [
@@ -13,8 +13,7 @@ const productsList = [
     cta: "Чего сидишь? Порадуй котэ, купи.",
     ingredients: "Печень утки разварная с артишоками.",
     question: "Котэ не одобряет?",
-    amount: 10,
-    checked: false
+    amount: 10
   },
   {
     id: "fish",
@@ -27,8 +26,7 @@ const productsList = [
     cta: "Чего сидишь? Порадуй котэ, купи.",
     ingredients: "Головы щучьи с чесноком да свежайшая семгушка.",
     question: "Котэ не одобряет?",
-    amount: 10,
-    checked: false
+    amount: 10
   },
   {
     id: "chicken",
@@ -42,8 +40,7 @@ const productsList = [
     cta: "Чего сидишь? Порадуй котэ, купи.",
     ingredients: "Филе из цыплят с трюфелями в бульоне.",
     question: "Котэ не одобряет?",
-    amount: 0,
-    checked: false
+    amount: 0
   }
 ];
 
@@ -58,6 +55,8 @@ const handleText = list => {
     }
   }, "");
 };
+
+const isChecked = (products, id) => products.some(p => p.id === id);
 
 const handleOutput = products => {
   let chosen = [];
@@ -84,47 +83,35 @@ const handleOutput = products => {
 };
 
 export const App = () => {
-  const [products, updateProducts] = useState(productsList);
+  const [selectedProducts, updateSelectedProducts] = useState([]);
 
-  useEffect(() => {
-    const updatedProducts = products.map(product => {
-      if (product.checked) {
-        return { ...product, amount: product.amount - 1 };
-      }
-      return product;
-    });
-    updateProducts(updatedProducts);
-  }, []);
+  const handleSelect = id =>
+    updateSelectedProducts(products => [...products, id]);
 
-  const handleCheck = id => {
-    updateProducts(products =>
-      products.map(product => {
-        const amount = product.checked
-          ? product.amount + 1
-          : product.amount - 1;
-        if (product.id === id) {
-          return {
-            ...product,
-            checked: !product.checked,
-            amount: amount
-          };
-        }
-        return product;
-      })
-    );
-  };
+  const handleDeselect = id =>
+    updateSelectedProducts(products => products.filter(p => p.id !== id));
 
   return (
     <section className="container">
       <h1 className="visually-hidden">Страница продажи корма для котов</h1>
       <h2 className="container__heading">Ты сегодня покормил кота?</h2>
       <div className="container__wrap">
-        {products.map((product, index) => {
+        {productsList.map(product => {
+          const id = product.id;
+          const checked = isChecked(selectedProducts, id);
+
           return (
             <Product
-              key={product.productName + index}
+              key={id}
               product={product}
-              handleCheck={handleCheck}
+              handleCheck={() => {
+                if (checked) {
+                  handleDeselect(id);
+                } else {
+                  handleSelect(id);
+                }
+              }}
+              checked={checked}
             />
           );
         })}

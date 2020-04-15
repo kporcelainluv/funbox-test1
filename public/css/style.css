@@ -150,7 +150,10 @@ html {
   display: flex;
   flex-direction: column;
 }
-
+.product__label {
+  display: inline-block;
+  height: 100%;
+}
 .product__input {
   opacity: 0;
 }
@@ -178,6 +181,7 @@ html {
   margin: 10px 0 0;
   font-family: Exo-SemiBold, Arial, sans-serif;
 }
+
 .product__flavor {
   font-size: 24px;
   line-height: 28px;

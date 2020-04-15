@@ -1,8 +1,9 @@
 # Cat food shop
 
 This website is a test case made for Funbox.
-Available here: [Funbox-test](https://funbox-test1.now.sh/)
-(This link supports IE11: [Funbox-test-IE11](https://funbox-test1-ie11.now.sh/))
+- online version: [Funbox-test](https://funbox-test1.now.sh/)
+- online version with IE11 support: [Funbox-test-IE11](https://funbox-test1-ie11.now.sh/)
+![Cat food shop picture](https://i.gyazo.com/0adb568322173b08369f5f0a883b6e7b.jpg)
 
 ## Branches
 
